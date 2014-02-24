@@ -1,0 +1,158 @@
+﻿@using Model;
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@using Microsoft.AspNet.Mvc.Facebook
+
+@model FacebookApp.Controllers.UserInfoController.pmPersonalInfo
+
+<script>
+    $(function () {
+
+        var counter = 0;
+
+        $('.moreData').click(function () {
+            counter += 10;
+            $.getJSON("UserInfo/GetNextUserPosts", { from: counter, UserId: "@Model.basicInfo.Id" }, function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    if (data.length < 10) {
+                        $('.moreData').css("display", "none");
+                    }
+                    var mainDiv = FormPost(data[i], false);
+                    $('.moreData').before(mainDiv);
+
+                }
+            });
+        });
+
+        $('#myTab a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        $('#myTab a:first').tab('show');
+    });
+    $('input[type="checkbox"]').change(function () {
+        var checked = this.checked;
+        $.post("UserInfo/SetUserToVoteList", { IsSet: checked }, function (data) {
+            if (checked) {
+                $('#VotingPlace').show();
+            }
+            else {
+                $('#VotingPlace').hide()
+            }
+        });
+    });
+</script>
+<article id="content">
+    <a target="_blank" href="@Model.basicInfo.Link"><h2>@Model.basicInfo.Name                    </h2></a>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@Model.basicInfo.Picture.Data.Url" class="img-rounded" />
+        </div>
+        <div class="col-md-6 panel panel-primary pull-right">
+            <table style="min-width:190px;">
+                <tbody>
+
+
+                    <tr>
+                        <td>
+                            <h5>Авторитет @Model.basicInfo.Avtoritet <span class="badget pull-right">(Місце:  @Model.basicInfo.PositionInAvtoritet )</span></h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h5>Хочу балотуватися :  @Html.CheckBox("isInVoting", @Model.basicInfo.IsInPeopleVoting, new { disabled = "" })</h5>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>
+                            @if (@Model.basicInfo.IsInPeopleVoting)
+                            {
+                                <div id="VotingPlace">
+                                    @if (Model.basicInfo.PotionInVoting != 0)
+                                    {
+                                        <h5>Місце в голосуванні  @Model.basicInfo.PotionInVoting</h5>
+                                    }
+                                    else
+                                    {
+                                        <h5>Немає активних голосувань</h5>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="VotingPlace" style="display: none">
+                                    @if (Model.basicInfo.PotionInVoting != 0)
+                                    {
+                                        <h5>Місце в голосуванні  @Model.basicInfo.PotionInVoting</h5>
+                                    }
+                                    else
+                                    {
+                                        <h5>Немає активних голосувань</h5>
+                                    }
+                                </div>
+                            }
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#myPosts" data-toogle="tab">Пости користувача</a></li>
+
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="myPosts">
+                @if (Model.personalPosts.Count() == 0)
+                {
+                    <h2>Поки немає постів</h2>
+                }
+                else
+                {
+                    foreach (var post in Model.personalPosts)
+                    {
+                        <div class="panel panel-info" id="@post.Id">
+                            <div class="panel-heading">
+                                <a href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "UserInfo", new { UserId = post.From.Id })" target="_top" class="pull-left">
+                                    @if (post.From.Picture != null)
+                                    {
+                                        <img src="@post.From.Picture.Data.Url" width:"50" height:"50" class="media-object" />
+                                    }
+                                </a>
+                                <h4 class="media-heading">
+                                    <a href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "UserInfo", new { UserId = post.From.Id })" target="_top">&nbsp;@post.From.Name </a>
+                                </h4>
+
+                            </div>
+                            <div class="panel-body">
+                                <div class="shortend-text">@Html.Raw(@post.Caption)</div>
+                                <div class="shortend-text">@Html.Raw(@post.Message)</div>
+                                <div class="shortend-text">@Html.Raw(@post.Description)</div>
+                                <img src="@post.Picture" />
+                            </div>
+                            <div class="panel-footer">
+                                @if (post.IsPodyaka)
+                                {
+                                    <button type="button" class="btn btn-success like"><span class="badge pull-right">@post.PodyakiCount</span>ДЯКУЮ!</button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-default like"><span class="badge pull-right">@post.PodyakiCount</span>ДЯКУЮ!</button>
+                                }
+                            </div>
+                        </div>
+                    }
+                    if (Model.personalPosts.Count() == 10)
+                    {
+                        <button class="btn btn-default moreData">Ще 10</button>
+                    }
+
+                }
+            </div>
+
+        </div>
+    </div>
+</article>

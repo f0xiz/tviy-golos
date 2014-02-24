@@ -1,0 +1,108 @@
+﻿@using Model;
+@using Microsoft.AspNet.Mvc.Facebook
+
+@model IEnumerable<FacebookApp.Controllers.AdminkaController.pmVoting>
+
+<script>
+    $(function () {
+        var counter = 0;
+        $('.btn-more').button();
+        $('.btn-more').click(function () {
+            counter += 10
+            $('.btn-more').button('loading');
+            $.getJSON("Voting/GetNext", { from: counter }, function (data) {
+
+                for (var i = 0; i < data.length; i++) {
+                    var rData = data[i];
+                    if (data.Id == null) {
+                        $('.btn-more').button('reset');
+                        continue;
+                    }
+                    var tr = newRow(
+                        rData.Name,
+                       '@GlobalFacebookConfiguration.Configuration.AppUrl' + '/Voting/VotingIndex?UserId=' + data.Id,
+                       rData.IsPersonal,
+                       rData.IsPersonal);
+                    var tbody = $('.table  tbody');
+                    tr.appendTo(tbody);
+                    $('.btn-more').button('reset');
+                }
+            });
+        });
+
+    });
+    function newRow(Name, Link, IsPersonal, IsLocked) {
+        var tr, td;
+        tr = $('<tr></tr>');
+        td = $('<td></td>');
+        if (IsPersonal) td.addClass("success");
+        var h4 = $('<h4></h4>', {
+            "class": "media-heading"
+        });
+        h4.append($('<a></a>', {
+            href: Link,
+            target: '_blank',
+            html: Name
+        }));
+        if (IsLocked) {
+            h4.append($('<p></p>', { html: '<span class="glyphicon glyphicon-lock"></span>' }));
+        }
+        td.append(h4);
+        tr.append(td);
+
+        tr.append($('<td></td>', { html: "<h3>" + rank + "</h3>" }));
+        return tr;
+    }
+</script>
+<article id="content">
+
+    <h4>Голосування</h4>
+    @if (Model.Count() == 0)
+    {
+        <p>Немає голосувань</p>
+    }
+    else
+    {
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var voting in Model)
+                {
+
+                    <tr>
+                        <td>
+                            <a target="_top" href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("VotingIndex", "Voting", new { VotingId = @voting.Id })">
+                                <h4>
+                                    @if (voting.IsLock)
+                                    {
+                                        <span class="glyphicon glyphicon-lock"></span>
+                                    }
+                                    @if (voting.IsPersonal)
+                                    {
+                                        <span class="glyphicon glyphicon-user"></span>
+                                    }
+                                    @voting.Name
+                                </h4>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>
+                        @if (Model.Count() == 10)
+                        {
+                            <button data-loading-text="Loading..." class="btn btn-default btn-more">Ще 10</button>
+                        }
+                    </td>
+
+                </tr>
+
+            </tfoot>
+        </table>
+    }
+</article>

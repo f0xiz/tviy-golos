@@ -1,0 +1,5 @@
+C:\Users\dimaf_000\Desktop\Projects\Facebook\FacebookApp\Database\bin\Debug\Database.dacpac
+C:\Users\dimaf_000\Desktop\Projects\Facebook\FacebookApp\Database\bin\Debug\Database.dll
+C:\Users\dimaf_000\Desktop\Projects\Facebook\FacebookApp\Database\bin\Debug\Database.pdb
+C:\Users\dimaf_000\Desktop\Projects\Facebook\FacebookApp\Database\obj\Debug\Database.dll
+C:\Users\dimaf_000\Desktop\Projects\Facebook\FacebookApp\Database\obj\Debug\Database.pdb

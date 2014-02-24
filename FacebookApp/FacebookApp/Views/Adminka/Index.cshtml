@@ -1,0 +1,39 @@
+﻿@using Model;
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@using Microsoft.AspNet.Mvc.Facebook
+<script>
+    $(function () {
+        $('.btn').button();
+        $('#btn-promoteLink').click(function () {
+            var link = $('#promoteLink').val();
+            $('#btn-promoteLink').button('loading');
+            $.post("Adminka/SetBals", {  UserId:link }, function (data) {
+                if (data == true) {
+                    $('#promoteLink').val('Все ОК))');
+                }
+                else  {
+                    $('#promoteLink').val('Помилка');
+                }
+                $('#btn-promoteLink').button('reset');
+            });
+        });
+       
+    });
+
+</script>
+
+<h2>Адмінка</h2>
+<p>
+    <div class="input-group">
+        <span class="input-group-addon">
+            Індифікатор користувача
+        </span>
+        <input type="text" class="form-control" id="promoteLink" />
+        <span class="input-group-btn">
+            <button type="button" id="btn-promoteLink" data-loading-text="Doing..." class="btn btn-success">Додати авторитет</button>
+        </span>
+    </div>
+</p>
+
+<a target="_top" class="btn btn-default" href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("VotingsList", "Adminka")"> Налаштувати голосування </a>
+

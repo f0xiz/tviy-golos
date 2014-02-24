@@ -1,0 +1,201 @@
+﻿@using Microsoft.AspNet.Mvc.Facebook
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Дякую</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/app")
+    <script type="text/javascript" src="~/Scripts/jQuery-Shorten.js"></script>
+
+</head>
+    <style>
+        .like > badge {
+            color:#000;
+        }
+    </style>
+<body>
+    <script>
+        function FormPost(data, isMyPost) {
+            var mainDiv = $('<div></div>', {
+                "class": "panel panel-info",
+                id: data.Id
+            });
+
+
+            var hDiv = $('<div></div>', {
+                "class": "panel-heading"
+            });
+            if (data.From.Picture != null) {
+                var a = $('<a></a>', {
+                    "class": "pull-left",
+                    href: '@GlobalFacebookConfiguration.Configuration.AppUrl/UserInfo/Index?UserId=' + data.From.Id,//link to user here
+                });
+
+                a.append($('<img></img>', {
+                    src: data.From.Picture.Data.Url,
+                    "width": "50",
+                    "height": "50",
+                    "class": "media-object"
+                }));
+                hDiv.append(a);
+            }
+            var h4 = $('<h4></h4>', {
+                "class": "media-heading"
+            });
+            h4.append($('<a></a>', {
+                href: '@GlobalFacebookConfiguration.Configuration.AppUrl/UserInfo/Index?UserId=' + data.From.Id,//link to user here
+                target: '_blank',
+                html: data.From.Name
+            }));
+
+
+            hDiv.append(h4);
+            mainDiv.append(hDiv);
+
+            var bDiv = $('<div></div>', {
+                "class": "panel-body"
+            });
+            bDiv.append($('<div></div>', {
+                "class": "shortend-text",
+                html: data.Caption
+            }));
+            bDiv.append($('<div></div>', {
+                "class": "shortend-text",
+                html: data.Message
+            }));
+            bDiv.append($('<div></div>', {
+                "class": "shortend-text",
+                html: data.Description
+            }));
+            bDiv.append($('<img></img>', { src: data.Picture }));
+            mainDiv.append(bDiv);
+            var fDiv = $('<div></div>', {
+                "class": "panel-footer"
+            });
+            if (isMyPost == false) {
+                if (data.IsPodyaka) {
+
+                    fDiv.append($('<button></button>', {
+                        "class": 'btn btn-success like',
+                        html: ' <span class="badge pull-right" >' + data.PodyakiCount + '</span> ДЯКУЮ!'
+                    }));
+
+                }
+                else {
+                    fDiv.append($('<button></button>', {
+                        "class": 'btn btn-default like',
+                        html: ' <span class="badge pull-right" >' + data.PodyakiCount + '</span> ДЯКУЮ!'
+                    }));
+                }
+            }
+            else {
+                fDiv.append($('<button></button>', {
+                    "class": 'btn btn-info',
+                    disabled:'disabled',
+                    html: ' <span class="badge pull-right" >' + data.PodyakiCount + '</span> ДЯКУЮ!'
+                }));
+            }
+            mainDiv.append(fDiv);
+            Short();
+           
+            return mainDiv;
+        };
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '@Microsoft.AspNet.Mvc.Facebook.GlobalFacebookConfiguration.Configuration.AppId', // App ID
+                status: true, // check login status
+                cookie: true, // enable cookies to allow the server to access the session
+                xfbml: true  // parse XFBML
+            });
+        };
+
+        // Load the SDK Asynchronously
+        (function (d) {
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document));
+        function Short() {
+            $(".shortend-text").shorten({
+                "showChars": 400,
+                "moreText": "Більше",
+                "lessText": "Менше",
+            });
+        };
+        
+        $(function () {
+            Short();
+            $('#content').delegate(".like", "click", function () {
+                var e = this;
+                var pressed = e;
+                var PostId = e.parentElement.parentElement.id;
+                var IsLike;
+                var tmp = e.classList[0].indexOf("success");
+                for (var i = 0; i < e.classList.length; i++) {
+                    if (e.classList[i].indexOf("success") != -1) {
+                        IsLike = false;
+                    }
+                    else if (e.classList[i].indexOf("default") != -1) {
+                        IsLike = true;
+                    }
+                }
+                $.post("/FriendsFeed/Podyaka/", { PostId: PostId, IsLike: IsLike }, function (data) {
+                    var selectorSpan = '#' + PostId + ' .like span';
+                    if (IsLike == false) {
+                        pressed.classList.remove("btn-success");
+                        pressed.classList.add("btn-default");
+                        $(selectorSpan).text(parseInt($(selectorSpan).text()) - 1);
+                    }
+                    else {
+                        pressed.classList.remove("btn-default");
+                        pressed.classList.add("btn-success");
+                        $(selectorSpan).text(1 + parseInt($(selectorSpan).text()));
+                    }
+                });
+            });
+        });
+    </script>
+
+    <div id="wrapper">
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu-1">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+              @*  <a class="navbar-brand" target="_top" href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "Home")">Дякую</a>*@
+            </div>
+
+            
+            <div class="collapse navbar-collapse navbar-static-top" id="menu-1">
+                <ul class="nav navbar-nav">
+                    <li><a target="_top" href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-home"></span></a></li>
+                    <li><a target="_top" href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "UserInfo")">Моя сторінка</a></li>
+                    <li><a target="_top" href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "FriendsFeed")">Пости друзів</a></li>
+                    <li><a target="_top" href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "DailyFeed")">Топ постів</a></li>
+                    <li><a target="_top" href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "Promote")">Рекомендувати</a></li>
+                    <li><a target="_top" href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "GlobalRating")">Рейтинг</a></li>
+                    <li><a target="_top" href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "Voting")">Голосування</a></li>
+                </ul>
+            </div>
+        </nav>
+        <header id="topHeader">
+            <h1></h1>
+        </header>
+        @RenderBody()
+        <footer>
+            <p>&copy; @DateTime.Now.Year</p>
+        </footer>
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

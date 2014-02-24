@@ -1,0 +1,842 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FacebookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdministationPodyakas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Score" Type="float" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DailyPosts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PostId" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PodyakaLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FromUserId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ToUserId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PostId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsLike" Type="bit" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="IsDone" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Podyaki">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PostId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Avtoritet" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Posts">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PodyakiCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Promote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiseData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserFriends">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="FriendId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="IsOwerAppUser" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PodyakiCount" Type="int" Nullable="false" />
+          <Property Name="Avtoritet" Type="float" Nullable="false" />
+          <Property Name="IsInPeopleVouting" Type="bit" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PictureScr" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LastActivity" Type="datetime" Nullable="false" />
+          <Property Name="Link" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+          <Property Name="IsVIP" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="VotingVariantId" Type="int" Nullable="false" />
+          <Property Name="Score" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Votings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsPeople" Type="bit" Nullable="false" />
+          <Property Name="IsClosed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VotingVariants">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Score" Type="float" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="20" />
+          <Property Name="VotingId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Administa__UserI__3A81B327">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="AdministationPodyakas" Type="Self.AdministationPodyakas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AdministationPodyakas">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DailyPost__PostI__2C3393D0">
+          <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
+          <End Role="DailyPosts" Type="Self.DailyPosts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="PostId" />
+            </Principal>
+            <Dependent Role="DailyPosts">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Podyaki__PostId__2E1BDC42">
+          <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
+          <End Role="Podyaki" Type="Self.Podyaki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="PostId" />
+            </Principal>
+            <Dependent Role="Podyaki">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Podyaki__UserId__2D27B809">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Podyaki" Type="Self.Podyaki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Podyaki">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Posts__UserId__2F10007B">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Promote__UserId__300424B4">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Promote" Type="Self.Promote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Promote">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserFrien__UserI__4222D4EF">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserFriends" Type="Self.UserFriends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserFriends">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vote__UserId__30F848ED">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Vote">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vote__VotingVari__31EC6D26">
+          <End Role="VotingVariants" Type="Self.VotingVariants" Multiplicity="1" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VotingVariants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vote">
+              <PropertyRef Name="VotingVariantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VotingVar__UserI__32E0915F">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="VotingVariants" Type="Self.VotingVariants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="VotingVariants">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VotingVar__Votin__33D4B598">
+          <End Role="Votings" Type="Self.Votings" Multiplicity="1" />
+          <End Role="VotingVariants" Type="Self.VotingVariants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Votings">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VotingVariants">
+              <PropertyRef Name="VotingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetAvtoritetRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetUsersSortedByAvtoritet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Count" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetVoteRank" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="VoteVariantId" Type="int" Mode="In" />
+          <Parameter Name="VotingId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SetOurFriendUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="FacebookModelStoreContainer">
+          <EntitySet Name="AdministationPodyakas" EntityType="Self.AdministationPodyakas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DailyPosts" EntityType="Self.DailyPosts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PodyakaLog" EntityType="Self.PodyakaLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Podyaki" EntityType="Self.Podyaki" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Posts" EntityType="Self.Posts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Promote" EntityType="Self.Promote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiseData" EntityType="Self.ServiseData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserFriends" EntityType="Self.UserFriends" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vote" EntityType="Self.Vote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Votings" EntityType="Self.Votings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VotingVariants" EntityType="Self.VotingVariants" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Administa__UserI__3A81B327" Association="Self.FK__Administa__UserI__3A81B327">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AdministationPodyakas" EntitySet="AdministationPodyakas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DailyPost__PostI__2C3393D0" Association="Self.FK__DailyPost__PostI__2C3393D0">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="DailyPosts" EntitySet="DailyPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Podyaki__PostId__2E1BDC42" Association="Self.FK__Podyaki__PostId__2E1BDC42">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="Podyaki" EntitySet="Podyaki" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Podyaki__UserId__2D27B809" Association="Self.FK__Podyaki__UserId__2D27B809">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Podyaki" EntitySet="Podyaki" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Posts__UserId__2F10007B" Association="Self.FK__Posts__UserId__2F10007B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Promote__UserId__300424B4" Association="Self.FK__Promote__UserId__300424B4">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Promote" EntitySet="Promote" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserFrien__UserI__4222D4EF" Association="Self.FK__UserFrien__UserI__4222D4EF">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserFriends" EntitySet="UserFriends" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vote__UserId__30F848ED" Association="Self.FK__Vote__UserId__30F848ED">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Vote" EntitySet="Vote" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vote__VotingVari__31EC6D26" Association="Self.FK__Vote__VotingVari__31EC6D26">
+            <End Role="VotingVariants" EntitySet="VotingVariants" />
+            <End Role="Vote" EntitySet="Vote" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VotingVar__UserI__32E0915F" Association="Self.FK__VotingVar__UserI__32E0915F">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="VotingVariants" EntitySet="VotingVariants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VotingVar__Votin__33D4B598" Association="Self.FK__VotingVar__Votin__33D4B598">
+            <End Role="Votings" EntitySet="Votings" />
+            <End Role="VotingVariants" EntitySet="VotingVariants" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FacebookModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DailyPosts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PostId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Posts" Relationship="Self.FK__DailyPost__PostI__2C3393D0" FromRole="DailyPosts" ToRole="Posts" />
+        </EntityType>
+        <EntityType Name="PodyakaLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FromUserId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ToUserId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PostId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsLike" Type="Boolean" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDone" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Podyaki">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PostId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Avtoritet" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Posts" Relationship="Self.FK__Podyaki__PostId__2E1BDC42" FromRole="Podyaki" ToRole="Posts" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Podyaki__UserId__2D27B809" FromRole="Podyaki" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Posts">
+          <Key>
+            <PropertyRef Name="PostId" />
+          </Key>
+          <Property Name="PostId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PodyakiCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DailyPosts" Relationship="Self.FK__DailyPost__PostI__2C3393D0" FromRole="Posts" ToRole="DailyPosts" />
+          <NavigationProperty Name="Podyaki" Relationship="Self.FK__Podyaki__PostId__2E1BDC42" FromRole="Posts" ToRole="Podyaki" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Posts__UserId__2F10007B" FromRole="Posts" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Promote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Promote__UserId__300424B4" FromRole="Promote" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="ServiseData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PodyakiCount" Type="Int32" Nullable="false" />
+          <Property Name="Avtoritet" Type="Double" Nullable="false" />
+          <Property Name="IsInPeopleVouting" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Podyaki" Relationship="Self.FK__Podyaki__UserId__2D27B809" FromRole="Users" ToRole="Podyaki" />
+          <NavigationProperty Name="Posts" Relationship="Self.FK__Posts__UserId__2F10007B" FromRole="Users" ToRole="Posts" />
+          <NavigationProperty Name="Promote" Relationship="Self.FK__Promote__UserId__300424B4" FromRole="Users" ToRole="Promote" />
+          <NavigationProperty Name="Vote" Relationship="Self.FK__Vote__UserId__30F848ED" FromRole="Users" ToRole="Vote" />
+          <NavigationProperty Name="VotingVariants" Relationship="Self.FK__VotingVar__UserI__32E0915F" FromRole="Users" ToRole="VotingVariants" />
+          <NavigationProperty Name="AdministationPodyakas" Relationship="FacebookModel.FK__Administa__UserI__3A81B327" FromRole="Users" ToRole="AdministationPodyakas" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PictureScr" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LastActivity" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UserFriends" Relationship="FacebookModel.FK__UserFrien__UserI__4222D4EF" FromRole="Users" ToRole="UserFriends" />
+          <Property Name="Link" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="IsVIP" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VotingVariantId" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Vote__UserId__30F848ED" FromRole="Vote" ToRole="Users" />
+          <NavigationProperty Name="VotingVariants" Relationship="Self.FK__Vote__VotingVari__31EC6D26" FromRole="Vote" ToRole="VotingVariants" />
+        </EntityType>
+        <EntityType Name="Votings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsPeople" Type="Boolean" Nullable="false" />
+          <Property Name="IsClosed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="VotingVariants" Relationship="Self.FK__VotingVar__Votin__33D4B598" FromRole="Votings" ToRole="VotingVariants" />
+        </EntityType>
+        <EntityType Name="VotingVariants">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Score" Type="Double" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="VotingId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__VotingVar__UserI__32E0915F" FromRole="VotingVariants" ToRole="Users" />
+          <NavigationProperty Name="Vote" Relationship="Self.FK__Vote__VotingVari__31EC6D26" FromRole="VotingVariants" ToRole="Vote" />
+          <NavigationProperty Name="Votings" Relationship="Self.FK__VotingVar__Votin__33D4B598" FromRole="VotingVariants" ToRole="Votings" />
+        </EntityType>
+        <Association Name="FK__DailyPost__PostI__2C3393D0">
+          <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
+          <End Role="DailyPosts" Type="Self.DailyPosts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="PostId" />
+            </Principal>
+            <Dependent Role="DailyPosts">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Podyaki__PostId__2E1BDC42">
+          <End Role="Posts" Type="Self.Posts" Multiplicity="1" />
+          <End Role="Podyaki" Type="Self.Podyaki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Posts">
+              <PropertyRef Name="PostId" />
+            </Principal>
+            <Dependent Role="Podyaki">
+              <PropertyRef Name="PostId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Podyaki__UserId__2D27B809">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Podyaki" Type="Self.Podyaki" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Podyaki">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Posts__UserId__2F10007B">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Posts" Type="Self.Posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Posts">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Promote__UserId__300424B4">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Promote" Type="Self.Promote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Promote">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vote__UserId__30F848ED">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Vote">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VotingVar__UserI__32E0915F">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="VotingVariants" Type="Self.VotingVariants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="VotingVariants">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vote__VotingVari__31EC6D26">
+          <End Role="VotingVariants" Type="Self.VotingVariants" Multiplicity="1" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VotingVariants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vote">
+              <PropertyRef Name="VotingVariantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VotingVar__Votin__33D4B598">
+          <End Role="Votings" Type="Self.Votings" Multiplicity="1" />
+          <End Role="VotingVariants" Type="Self.VotingVariants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Votings">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VotingVariants">
+              <PropertyRef Name="VotingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FacebookEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DailyPosts" EntityType="Self.DailyPosts" />
+          <EntitySet Name="PodyakaLog" EntityType="Self.PodyakaLog" />
+          <EntitySet Name="Podyaki" EntityType="Self.Podyaki" />
+          <EntitySet Name="Posts" EntityType="Self.Posts" />
+          <EntitySet Name="Promote" EntityType="Self.Promote" />
+          <EntitySet Name="ServiseData" EntityType="Self.ServiseData" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Vote" EntityType="Self.Vote" />
+          <EntitySet Name="Votings" EntityType="Self.Votings" />
+          <EntitySet Name="VotingVariants" EntityType="Self.VotingVariants" />
+          <AssociationSet Name="FK__DailyPost__PostI__2C3393D0" Association="Self.FK__DailyPost__PostI__2C3393D0">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="DailyPosts" EntitySet="DailyPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Podyaki__PostId__2E1BDC42" Association="Self.FK__Podyaki__PostId__2E1BDC42">
+            <End Role="Posts" EntitySet="Posts" />
+            <End Role="Podyaki" EntitySet="Podyaki" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Podyaki__UserId__2D27B809" Association="Self.FK__Podyaki__UserId__2D27B809">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Podyaki" EntitySet="Podyaki" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Posts__UserId__2F10007B" Association="Self.FK__Posts__UserId__2F10007B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Posts" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Promote__UserId__300424B4" Association="Self.FK__Promote__UserId__300424B4">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Promote" EntitySet="Promote" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vote__UserId__30F848ED" Association="Self.FK__Vote__UserId__30F848ED">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Vote" EntitySet="Vote" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VotingVar__UserI__32E0915F" Association="Self.FK__VotingVar__UserI__32E0915F">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="VotingVariants" EntitySet="VotingVariants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vote__VotingVari__31EC6D26" Association="Self.FK__Vote__VotingVari__31EC6D26">
+            <End Role="VotingVariants" EntitySet="VotingVariants" />
+            <End Role="Vote" EntitySet="Vote" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VotingVar__Votin__33D4B598" Association="Self.FK__VotingVar__Votin__33D4B598">
+            <End Role="Votings" EntitySet="Votings" />
+            <End Role="VotingVariants" EntitySet="VotingVariants" />
+          </AssociationSet>
+          <FunctionImport Name="GetAvtoritetRank" ReturnType="Collection(Int64)">
+          <Parameter Name="UserId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetVoteRank" ReturnType="Collection(Int64)">
+            <Parameter Name="VoteVariantId" Mode="In" Type="Int32" />
+            <Parameter Name="VotingId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="AdministationPodyakas" EntityType="FacebookModel.AdministationPodyakas" />
+          <AssociationSet Name="FK__Administa__UserI__3A81B327" Association="FacebookModel.FK__Administa__UserI__3A81B327">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AdministationPodyakas" EntitySet="AdministationPodyakas" />
+          </AssociationSet>
+          <FunctionImport Name="GetUsersSortedByAvtoritet" ReturnType="Collection(FacebookModel.GetUsersSortedByAvtoritet_Result)">
+          <Parameter Name="Count" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="UserFriends" EntityType="FacebookModel.UserFriends" />
+          <AssociationSet Name="FK__UserFrien__UserI__4222D4EF" Association="FacebookModel.FK__UserFrien__UserI__4222D4EF">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserFriends" EntitySet="UserFriends" />
+          </AssociationSet>
+          <FunctionImport Name="SetOurFriendUsers" />
+        </EntityContainer>
+        <EntityType Name="AdministationPodyakas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Score" Type="Double" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="FacebookModel.FK__Administa__UserI__3A81B327" FromRole="AdministationPodyakas" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK__Administa__UserI__3A81B327">
+          <End Type="FacebookModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="FacebookModel.AdministationPodyakas" Role="AdministationPodyakas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AdministationPodyakas">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetUsersSortedByAvtoritet_Result">
+          <Property Type="String" Name="UserId" Nullable="false" MaxLength="20" />
+          <Property Type="Int64" Name="RowNumber" Nullable="true" />
+          <Property Type="Double" Name="Avtoritet" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="UserFriends">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="UserId" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FriendId" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsOwerAppUser" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="FacebookModel.FK__UserFrien__UserI__4222D4EF" FromRole="UserFriends" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK__UserFrien__UserI__4222D4EF">
+          <End Type="FacebookModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="FacebookModel.UserFriends" Role="UserFriends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserFriends">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FacebookModelStoreContainer" CdmEntityContainer="FacebookEntities">
+          <EntitySetMapping Name="DailyPosts">
+            <EntityTypeMapping TypeName="FacebookModel.DailyPosts">
+              <MappingFragment StoreEntitySet="DailyPosts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PodyakaLog">
+            <EntityTypeMapping TypeName="FacebookModel.PodyakaLog">
+              <MappingFragment StoreEntitySet="PodyakaLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
+                <ScalarProperty Name="ToUserId" ColumnName="ToUserId" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="IsLike" ColumnName="IsLike" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="IsDone" ColumnName="IsDone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Podyaki">
+            <EntityTypeMapping TypeName="FacebookModel.Podyaki">
+              <MappingFragment StoreEntitySet="Podyaki">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Avtoritet" ColumnName="Avtoritet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="FacebookModel.Posts">
+              <MappingFragment StoreEntitySet="Posts">
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PodyakiCount" ColumnName="PodyakiCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Promote">
+            <EntityTypeMapping TypeName="FacebookModel.Promote">
+              <MappingFragment StoreEntitySet="Promote">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiseData">
+            <EntityTypeMapping TypeName="FacebookModel.ServiseData">
+              <MappingFragment StoreEntitySet="ServiseData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FacebookModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IsVIP" ColumnName="IsVIP" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="LastActivity" ColumnName="LastActivity" />
+                <ScalarProperty Name="PictureScr" ColumnName="PictureScr" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PodyakiCount" ColumnName="PodyakiCount" />
+                <ScalarProperty Name="Avtoritet" ColumnName="Avtoritet" />
+                <ScalarProperty Name="IsInPeopleVouting" ColumnName="IsInPeopleVouting" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vote">
+            <EntityTypeMapping TypeName="FacebookModel.Vote">
+              <MappingFragment StoreEntitySet="Vote">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="VotingVariantId" ColumnName="VotingVariantId" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Votings">
+            <EntityTypeMapping TypeName="FacebookModel.Votings">
+              <MappingFragment StoreEntitySet="Votings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsPeople" ColumnName="IsPeople" />
+                <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VotingVariants">
+            <EntityTypeMapping TypeName="FacebookModel.VotingVariants">
+              <MappingFragment StoreEntitySet="VotingVariants">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="VotingId" ColumnName="VotingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetAvtoritetRank" FunctionName="FacebookModel.Store.GetAvtoritetRank" />
+          <FunctionImportMapping FunctionImportName="GetVoteRank" FunctionName="FacebookModel.Store.GetVoteRank" />
+          <EntitySetMapping Name="AdministationPodyakas">
+            <EntityTypeMapping TypeName="FacebookModel.AdministationPodyakas">
+              <MappingFragment StoreEntitySet="AdministationPodyakas">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetUsersSortedByAvtoritet" FunctionName="FacebookModel.Store.GetUsersSortedByAvtoritet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FacebookModel.GetUsersSortedByAvtoritet_Result">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RowNumber" ColumnName="RowNumber" />
+                <ScalarProperty Name="Avtoritet" ColumnName="Avtoritet" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="UserFriends">
+            <EntityTypeMapping TypeName="FacebookModel.UserFriends">
+              <MappingFragment StoreEntitySet="UserFriends">
+                <ScalarProperty Name="IsOwerAppUser" ColumnName="IsOwerAppUser" />
+                <ScalarProperty Name="FriendId" ColumnName="FriendId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SetOurFriendUsers" FunctionName="FacebookModel.Store.SetOurFriendUsers" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

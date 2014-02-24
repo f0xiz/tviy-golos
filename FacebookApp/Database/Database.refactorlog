@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="9bc75898-8215-484e-8719-f09e3d8eca8e" ChangeDateTime="12/26/2013 22:01:17">
+    <Property Name="ElementName" Value="[dbo].[Users].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="89de50bc-2a63-45ae-8377-64a6a2e502de" ChangeDateTime="12/26/2013 22:01:39">
+    <Property Name="ElementName" Value="[dbo].[Users].[UserLink]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Link" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2c115b56-a3b3-4e57-b928-bd4012d23694" ChangeDateTime="12/26/2013 22:07:12">
+    <Property Name="ElementName" Value="[dbo].[Posts].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Posts]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PostId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e59839fd-be33-46f5-9737-9b925a92cec4" ChangeDateTime="12/26/2013 22:08:03">
+    <Property Name="ElementName" Value="[dbo].[Users].[Raiting]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PodyakCount" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="29fe468f-d5ad-4473-85c5-7e6cefc052df" ChangeDateTime="12/26/2013 22:08:06">
+    <Property Name="ElementName" Value="[dbo].[Users].[PodyakCount]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PodyakiCount" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="66ad7241-0dbc-431f-8abc-c91e7a4c810c" ChangeDateTime="12/28/2013 14:26:18">
+    <Property Name="ElementName" Value="[dbo].[Users_Voutings].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users_Voutings]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4c4edcc9-8c4c-4855-aa81-c1277756dce1" ChangeDateTime="12/28/2013 18:34:27">
+    <Property Name="ElementName" Value="[dbo].[Users].[Raiting]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Avtoritet" />
+  </Operation>
+</Operations>

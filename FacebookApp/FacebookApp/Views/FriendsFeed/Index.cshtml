@@ -1,0 +1,158 @@
+﻿@using Model;
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@using Microsoft.AspNet.Mvc.Facebook
+@model FacebookApp.Controllers.FriendsFeedController.pmIndex
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<script>
+
+    $(function () {
+        var counter1 = 0;
+        var counter2 = 0;
+        $('#friendsPosts .moreData').click(function () {
+            $('#friendsPosts .moreData').button('loading');
+            counter1 += 10;
+            $.getJSON("FriendsFeed/GetNextFeed", { from: counter1 }, function (data) {
+                if (data.length < 10) {
+                    $('#friendsPosts .moreData').css("display", "none");
+                }
+                for (var i = 0; i < data.length; i++) {
+
+                    var mainDiv = FormPost(data[i], false);
+                    $('#friendsPosts .moreData').before(mainDiv);
+                }
+                $('#friendsPosts .moreData').button('reset');
+            });
+        });
+        $('#promotePosts .moreData').click(function () {
+            $('#promotePosts .moreData').button('loading');
+            counter2 += 10;
+            $.getJSON("FriendsFeed/GetNextPromote", { from: counter2 }, function (data) {
+                if (data.length < 10) {
+                    $('#promotePosts .moreData').css("display", "none");
+                }
+                for (var i = 0; i < data.length; i++) {
+
+                    var mainDiv = FormPost(data[i], false);
+                    $('#promotePosts .moreData').before(mainDiv);
+
+                }
+                $('#promotePosts .moreData').button('reset');
+            });
+        });
+
+        $('#myTab a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        $('#myTab a:first').tab('show');
+    });
+</script>
+<article id="content">
+
+    <div class="row">
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#friendsPosts" data-toogle="tab">Пости друзів</a></li>
+            <li><a href="#promotePosts" data-toogle="tab">Запропоновані пости</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="friendsPosts">
+                @if (Model.friendsFeed.Count() == 0)
+                {
+                    <h2>Поки немає постів. Напевно, ваші друзі, ще не встановили наше застосування. Або порадьте друзям встановити ддаток "Твій.голос", або висловіть подяку в розділі топ постів.</h2>
+                }
+                else
+                {
+                    foreach (var post in Model.friendsFeed)
+                    {
+                        <div class="panel panel-info" id="@post.Id">
+                            <div class="panel-heading">
+                                <a href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "UserInfo", new { UserId = post.From.Id })" target="_top" class="pull-left">
+                                    @if (post.From.Picture != null)
+                                    {
+                                        <img src="@post.From.Picture.Data.Url" width:"50" height:"50" class="media-object" />
+                                    }
+                                </a>
+                                <h4 class="media-heading">
+                                    <a href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "UserInfo", new { UserId = post.From.Id })" target="_top">&nbsp;@post.From.Name </a>
+                                </h4>
+
+                            </div>
+                            <div class="panel-body">
+                                <div class="shortend-text">@Html.Raw(@post.Caption)</div>
+                                <div class="shortend-text">@Html.Raw(@post.Message)</div>
+                                <div class="shortend-text">@Html.Raw(@post.Description)</div>
+                                <img src="@post.Picture" />
+                            </div>
+                            <div class="panel-footer">
+                                @if (post.IsPodyaka)
+                                {
+                                    <button type="button" class="btn btn-success like"><span class="badge pull-right">@post.PodyakiCount</span>ДЯКУЮ!</button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-default like"><span class="badge pull-right">@post.PodyakiCount</span>ДЯКУЮ!</button>
+                                }
+                            </div>
+                        </div>
+                    }
+                    if (Model.friendsFeed.Count() == 10)
+                    {
+                        <button class="btn btn-default moreData">Ще 10</button>
+                    }
+
+                }
+            </div>
+            <div class="tab-pane fade" id="promotePosts">
+                @if (Model.promotePosts.Count() == 0)
+                {
+                    <h2>Поки немає запропонованих постів.</h2>
+                }
+                else
+                {
+                    foreach (var post in Model.promotePosts)
+                    {
+                        <div class="panel panel-info" id="@post.Id">
+                            <div class="panel-heading">
+                                <a href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "UserInfo", new { UserId = post.From.Id })" target="_top" class="pull-left">
+                                    @if (post.From.Picture != null)
+                                    {
+                                        <img src="@post.From.Picture.Data.Url" width:"50" height:"50" class="media-object" />
+                                    }
+                                </a>
+                                <h4 class="media-heading">
+                                    <a href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "UserInfo", new { UserId = post.From.Id })" target="_top">&nbsp;@post.From.Name </a>
+                                </h4>
+
+                            </div>
+                            <div class="panel-body">
+                                <div class="shortend-text">@Html.Raw(@post.Caption)</div>
+                                <div class="shortend-text">@Html.Raw(@post.Message)</div>
+                                <div class="shortend-text">@Html.Raw(@post.Description)</div>
+                                <img src="@post.Picture" />
+                            </div>
+                            <div class="panel-footer">
+                                @if (post.IsPodyaka)
+                                {
+                                    <button type="button" class="btn btn-success like"><span class="badge pull-right like">@post.PodyakiCount</span>ДЯКУЮ!</button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-default like"><span class="badge pull-right like">@post.PodyakiCount</span>ДЯКУЮ!</button>
+                                }
+                            </div>
+                        </div>
+                    }
+                    if (Model.promotePosts.Count() == 10)
+                    {
+                        <button class="btn btn-default moreData">Ще 10</button>
+                    }
+
+                }
+            </div>
+        </div>
+    </div>
+</article>

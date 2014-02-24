@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FacebookModelStoreContainer" CdmEntityContainer="FacebookEntities">
+    <EntitySetMapping Name="DailyPosts">
+      <EntityTypeMapping TypeName="FacebookModel.DailyPosts">
+        <MappingFragment StoreEntitySet="DailyPosts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PodyakaLog">
+      <EntityTypeMapping TypeName="FacebookModel.PodyakaLog">
+        <MappingFragment StoreEntitySet="PodyakaLog">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FromUserId" ColumnName="FromUserId" />
+          <ScalarProperty Name="ToUserId" ColumnName="ToUserId" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="IsLike" ColumnName="IsLike" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="IsDone" ColumnName="IsDone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Podyaki">
+      <EntityTypeMapping TypeName="FacebookModel.Podyaki">
+        <MappingFragment StoreEntitySet="Podyaki">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Avtoritet" ColumnName="Avtoritet" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="FacebookModel.Posts">
+        <MappingFragment StoreEntitySet="Posts">
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="PodyakiCount" ColumnName="PodyakiCount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Promote">
+      <EntityTypeMapping TypeName="FacebookModel.Promote">
+        <MappingFragment StoreEntitySet="Promote">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PostId" ColumnName="PostId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ServiseData">
+      <EntityTypeMapping TypeName="FacebookModel.ServiseData">
+        <MappingFragment StoreEntitySet="ServiseData">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="FacebookModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="IsVIP" ColumnName="IsVIP" />
+          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+          <ScalarProperty Name="Link" ColumnName="Link" />
+          <ScalarProperty Name="LastActivity" ColumnName="LastActivity" />
+          <ScalarProperty Name="PictureScr" ColumnName="PictureScr" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="PodyakiCount" ColumnName="PodyakiCount" />
+          <ScalarProperty Name="Avtoritet" ColumnName="Avtoritet" />
+          <ScalarProperty Name="IsInPeopleVouting" ColumnName="IsInPeopleVouting" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vote">
+      <EntityTypeMapping TypeName="FacebookModel.Vote">
+        <MappingFragment StoreEntitySet="Vote">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="VotingVariantId" ColumnName="VotingVariantId" />
+          <ScalarProperty Name="Score" ColumnName="Score" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Votings">
+      <EntityTypeMapping TypeName="FacebookModel.Votings">
+        <MappingFragment StoreEntitySet="Votings">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsPeople" ColumnName="IsPeople" />
+          <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VotingVariants">
+      <EntityTypeMapping TypeName="FacebookModel.VotingVariants">
+        <MappingFragment StoreEntitySet="VotingVariants">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="Score" ColumnName="Score" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="VotingId" ColumnName="VotingId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetAvtoritetRank" FunctionName="FacebookModel.Store.GetAvtoritetRank" />
+    <FunctionImportMapping FunctionImportName="GetVoteRank" FunctionName="FacebookModel.Store.GetVoteRank" />
+    <EntitySetMapping Name="AdministationPodyakas">
+      <EntityTypeMapping TypeName="FacebookModel.AdministationPodyakas">
+        <MappingFragment StoreEntitySet="AdministationPodyakas">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Score" ColumnName="Score" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetUsersSortedByAvtoritet" FunctionName="FacebookModel.Store.GetUsersSortedByAvtoritet">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="FacebookModel.GetUsersSortedByAvtoritet_Result">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="RowNumber" ColumnName="RowNumber" />
+          <ScalarProperty Name="Avtoritet" ColumnName="Avtoritet" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="UserFriends">
+      <EntityTypeMapping TypeName="FacebookModel.UserFriends">
+        <MappingFragment StoreEntitySet="UserFriends">
+          <ScalarProperty Name="IsOwerAppUser" ColumnName="IsOwerAppUser" />
+          <ScalarProperty Name="FriendId" ColumnName="FriendId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SetOurFriendUsers" FunctionName="FacebookModel.Store.SetOurFriendUsers" />
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,138 @@
+﻿@using Model;
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@using Microsoft.AspNet.Mvc.Facebook
+
+@model IEnumerable<FacebookSimpleUser>
+<script>
+   
+    $(function () {
+        var counter = 0;
+        $('.btn-more').button();
+        $('.btn-more').click(function () {
+            counter += 10
+            $('.btn-more').button('loading');
+            $.getJSON("GlobalRating/GetNext", { from: counter }, function (data) {
+                if (data.length < 10) $('.btn-more').hide();
+                for (var i = 0; i < data.length; i++) {
+                    var rData = data[i];
+                    if (rData.Id == null) {
+                        $('.btn-more').button('reset');
+                        continue;
+                    }
+                    var tr = newRow(
+                        rData.PositionInAvtoritet,
+                        rData.Name,
+                       '@GlobalFacebookConfiguration.Configuration.AppUrl' + '/UserInfo/Index?UserId=' + rData.Id,
+                       rData.Picture,
+                       rData.Avtoritet);
+                   var tbody = $('.table  tbody');
+                    tr.appendTo(tbody);           
+                }
+                $('.btn-more').button('reset');
+            });
+        });
+
+    });
+    function newRow(No, Name,uLink,imgLink, rank) {
+        var tr, td;
+        tr = $('<tr></tr>');
+        td = $('<td></td>',{html:No});
+        tr.append(td);
+        td = $('<td></td>');
+        if (imgLink != null) {
+            var a = $('<a></a>', {
+                "class": "pull-left",
+                href: uLink
+            });
+
+            a.append($('<img></img>', {
+                "width":"50",
+                "height":"50",
+                src:  imgLink.Data.Url,
+                "class": "media-object"
+            }));
+            td.append(a);
+        }
+        var h4=$('<h4></h4>',{
+            "class":"media-heading"
+        });
+        h4.append($('<a></a>',{
+            href:uLink,
+            target:'_blank',
+            html:Name
+        }));
+        if (Name != null) {
+            var A = 0;
+        }
+        td.append(h4);
+        tr.append(td);
+       
+        tr.append($('<td></td>', { html: "<h3>" + rank + "</h3>" }));
+        return tr;
+    }
+</script>
+<article id="content">
+
+    <h4>Рейтинг користувачів</h4>
+    @if (Model.Count() == 0)
+    {
+       <h2>Поки немає записів</h2>
+    }
+    else
+    {
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                       №
+                    </th>
+                    <th>
+                       Людина
+                    </th>
+                    <th>
+                       Авторитет
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>
+                            @user.PositionInAvtoritet
+                        </td>
+                        <td>
+                            <a class="pull-left" href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "UserInfo", new { UserId = user.Id })" target="_top"> 
+                            @if (user.Picture!=null)
+                            { 
+                            <img src="@user.Picture.Data.Url" class="media-object" width="50" height="50" />
+                            }
+                         </a>
+                         <h4 class="media-heading">
+                          <a href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "UserInfo", new { UserId = user.Id })" target="_top"> &nbsp;@user.Name </a>                       
+                        </h4>
+                        </td>
+                        <td>
+                          <h3>  @user.Avtoritet</h3>
+                        </td>
+                    </tr>
+                }               
+            </tbody>
+          
+            <tfoot>
+                <tr>
+                    <td>
+                       @if(Model.Count()==10)
+                       {
+                            <button data-loading-text="Loading..." class="btn btn-default btn-more">Ще 10</button>
+                       }
+                    </td>
+
+                </tr>
+                
+            </tfoot>
+             
+        </table>
+    }
+
+</article>

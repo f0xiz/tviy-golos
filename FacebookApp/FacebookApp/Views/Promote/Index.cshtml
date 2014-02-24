@@ -1,0 +1,101 @@
+﻿@using Model;
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@using Microsoft.AspNet.Mvc.Facebook
+@model List<FacebookPost>
+<script>
+    $(function () {
+        $('.btn').button();
+        $('#btn-promoteLink').click(function () {
+            var link = $('#promoteLink').val();
+            $('#btn-promoteLink').button('loading');
+            $.post("Promote/PromoteLink", { Link: link }, function (data) {
+                if (data == 1) {
+                    $('#promoteLink').val('Помилка під час додавання.');
+                }
+                else if (data == 2) {
+                    $('#promoteLink').val('Користувач відсутній у системі.');
+                }
+                else if (data == 3) {
+                    $('#promoteLink').val('Запис є не коректним, можливо він приватний.');
+                }
+                else {
+                    $('#promoteLink').val('Запис успішно запропонований.');
+                }
+                $('#btn-promoteLink').button('reset');
+            });
+        });
+        $('.btn-promoter').click(function () {
+            var pressed = this;
+            var postId = this.parentElement.parentElement.id;
+            $('#' + postId + ' .btn-promoter').button('loading');
+            $.post("Promote/Promote", { PostId: postId }, function (data) {
+                $('#' + postId).removeClass('panel-default');
+                $('#' + postId).addClass('panel-success');
+                $('#' + postId + ' .btn-promoter').css("display", "none");
+            });
+        });
+
+        var counter = 0;
+
+        $('.btn-more').click(function () {
+            $('.btn-more').button('loading');
+            counter += 10;
+            $.getJSON("Promote/GetNext", { from: counter }, function (data) {
+                if (data.length < 10) $('.btn-more').hide();
+                for (var i = 0; i < data.length; i++) {
+                    var mainDiv = FormPost(data[i], false);
+                    $('.btn-more').before(mainDiv);
+                    $('.btn-more').button('reset');
+                }
+            });
+        });
+    });
+</script>
+<h2>Рекомендувати свої записи для голосування користувачам системи</h2>
+<div class="input-group" style="margin:1em;">
+    <span class="input-group-addon">Посилання</span>
+    <input type="text" class="form-control" id="promoteLink" />
+    <span class="input-group-btn"><button type="button" id="btn-promoteLink" data-loading-text="Promoting..." class="btn btn-success">Рекомендувати</button></span>
+</div>
+@if (Model.Count == 0)
+{
+    <h2>Поки немає записів</h2>
+}
+else
+{
+    foreach (var post in Model)
+    {
+        <div class="panel panel-default" id="@post.Id">
+            <div class="panel-heading">
+                @if (post.From.Picture != null)
+                {
+                    <a class="pull-left" href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "UserInfo")" target="_top">
+                        <img src="@post.From.Picture.Data.Url" width:"50" height:"50" class="media-object" />
+                    </a>
+                }
+                <h4 class="media-heading">
+                    <a href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "UserInfo")" target="_top">&nbsp;@post.From.Name </a>
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="shortend-text">@Html.Raw(@post.Caption)</div>
+                <div class="shortend-text">@Html.Raw(@post.Message)</div>
+                <div class="shortend-text">@Html.Raw(@post.Description)</div>
+                <img src="@post.Picture" />
+            </div>
+
+
+            <div class="panel-footer">
+
+                <button type="button" data-loading-text="Promoting..." class="btn btn-primary btn-promoter">Рекомендувати</button>
+            </div>
+        </div>
+
+
+    }
+    if (Model.Count == 10)
+    {
+        <button data-loading-text="Loading..." class="btn btn-default btn-more">Ще 10</button>
+    }
+
+}

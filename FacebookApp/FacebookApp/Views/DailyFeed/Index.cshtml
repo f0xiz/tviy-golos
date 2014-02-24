@@ -1,0 +1,72 @@
+﻿@using Model;
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@using Microsoft.AspNet.Mvc.Facebook
+@model List<FacebookPost>
+@{
+    ViewBag.Title = "Page";
+}
+<script>
+
+    $(function () {
+        var counter = 0;
+        $('.moreData').click(function () {
+            counter += 10;
+            $('.moreData').button('loading');
+            $.getJSON("DailyFeed/GetNext", { from: counter }, function (data) {
+                if (data.length < 10) $('.moreData').hide();
+                for (var i = 0; i < data.length; i++) {
+                    var mainDiv = FormPost(data[i], false);
+                    $('.moreData').before(mainDiv);
+                    $('.moreData').button('reset');
+                }
+            });
+        });
+    });
+</script>
+<h2>Пости за тиждень за кількістю подяк</h2>
+<article id="content">
+    @if (Model.Count == 0)
+    {
+        <h2>Поки немає постів</h2>
+    }
+    else
+    {
+        foreach (var post in Model)
+        {
+            <div class="panel panel-info" id="@post.Id">
+                <div class="panel-heading">
+                    <a href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index","UserInfo", new { UserId = post.From.Id })" target="_top" class="pull-left">
+                        @if (post.From.Picture != null)
+                        {
+                            <img src="@post.From.Picture.Data.Url" width:"50" height:"50" class="media-object" />
+                        }
+                    </a>
+                    <h4 class="media-heading">
+                        <a href="@GlobalFacebookConfiguration.Configuration.AppUrl@Url.Action("Index", "UserInfo", new { UserId = post.From.Id })" target="_top">&nbsp;@post.From.Name </a>
+                    </h4>
+
+                </div>
+                <div class="panel-body">
+                    <div class="shortend-text">@Html.Raw(@post.Caption)</div>
+                    <div class="shortend-text">@Html.Raw(@post.Message)</div>
+                    <div class="shortend-text">@Html.Raw(@post.Description)</div>
+                    <img src="@post.Picture" />
+                </div>
+                <div class="panel-footer">
+                    @if (post.IsPodyaka)
+                    {
+                        <button type="button" class="btn btn-success like"><span class="badge pull-right">@post.PodyakiCount</span>ДЯКУЮ!</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-default like"><span class="badge pull-right">@post.PodyakiCount</span>ДЯКУЮ!</button>
+                    }
+                </div>
+            </div>
+        }
+        if (Model.Count == 10)
+        {
+            <button data-loading-text="Loading..." class="btn btn-default moreData">Ще 10</button>
+        }
+    }
+</article>
